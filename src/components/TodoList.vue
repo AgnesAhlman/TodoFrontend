@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { createTodo, deleteTodo, getTodos, type Todo } from '../services/api';
+import { deleteTodo, getTodos, type Todo } from '../services/api';
 
 const todos = ref<Todo[]>([]); // Explicitly specify the type
-const newTodo = ref<string>('');
 
 const options: Intl.DateTimeFormatOptions = {
   month: 'numeric',
@@ -14,12 +13,6 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
 onMounted(async () => {
   todos.value = await getTodos();
 });
-
-async function onSubmit() {
-  const todo = await createTodo(newTodo.value);
-  todos.value.push(todo);
-  newTodo.value = '';
-}
 
 async function removeTodo(todo: Todo) {
   const isSuccess = await deleteTodo(todo.id);
@@ -32,7 +25,7 @@ async function removeTodo(todo: Todo) {
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <h1>Todo</h1>
     <div v-if="todos">
       <h5>Here are your todos:</h5>
@@ -43,11 +36,16 @@ async function removeTodo(todo: Todo) {
         </li>
       </ul>
     </div>
-    <form @submit.prevent="onSubmit">
-      <input v-model="newTodo" />
-      <button>Add Todo</button>
-    </form>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+  background-color: antiquewhite;
+}
+</style>
