@@ -5,6 +5,12 @@ import { createTodo, deleteTodo, getTodos, type Todo } from '../services/api';
 const todos = ref<Todo[]>([]); // Explicitly specify the type
 const newTodo = ref<string>('');
 
+const options: Intl.DateTimeFormatOptions = {
+  month: 'numeric',
+  day: 'numeric',
+};
+const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
+
 onMounted(async () => {
   todos.value = await getTodos();
 });
@@ -32,7 +38,8 @@ async function removeTodo(todo: Todo) {
       <h5>Here are your todos:</h5>
       <ul>
         <li v-for="todo in todos" :key="todo.id">
-          {{ todo.name }} {{ todo.createdAt }} <button @click="removeTodo(todo)">X</button>
+          {{ todo.name }} {{ dateFormatter.format(new Date(todo.createdAt)) }}
+          <button @click="removeTodo(todo)">X</button>
         </li>
       </ul>
     </div>
