@@ -1,29 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-interface Todo {
-  id: number;
-  name: string;
-  isComplete: boolean;
-}
+import { ref, onMounted } from 'vue';
+import { createTodo, deleteTodo, getTodos, type Todo } from '../services/api';
 
 const todos = ref<Todo[]>([]); // Explicitly specify the type
+const newTodo = ref<string>('');
 
-// Simulate an initial fetch
-fetch('http://localhost:5053/api/TodoItems')
-  .then((response) => response.json())
-  .then((data) => (todos.value = data));
+onMounted(async () => {
+  todos.value = await getTodos();
+});
 
-const newTodo = ref('');
-let id = 1; // Initialize the id variable
-
-function addTodo() {
-  todos.value.push({ id: id++, name: newTodo.value, isComplete: false });
+async function onSubmit() {
+  const todo = await createTodo(newTodo.value);
+  todos.value.push(todo);
   newTodo.value = '';
 }
 
-function removeTodo(todo) {
-  todos.value = todos.value.filter((t) => t !== todo);
+async function removeTodo(todo: Todo) {
+  const isSuccess = await deleteTodo(todo.id);
+  if (isSuccess) {
+    todos.value = todos.value.filter((t) => t !== todo);
+  } else {
+    console.error('Failed to delete todo with ID:', todo.id);
+  }
 }
 </script>
 
@@ -38,7 +36,7 @@ function removeTodo(todo) {
         </li>
       </ul>
     </div>
-    <form @submit.prevent="addTodo">
+    <form @submit.prevent="onSubmit">
       <input v-model="newTodo" />
       <button>Add Todo</button>
     </form>
