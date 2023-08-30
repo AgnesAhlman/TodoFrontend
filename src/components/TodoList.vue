@@ -32,7 +32,7 @@ async function removeTodo(todo: Todo) {
       <h5>Here are your todos:</h5>
       <ul>
         <li v-for="todo in todos" :key="todo.id">
-          {{ todo.name }} <button @click="removeTodo(todo)">X</button>
+          {{ todo.name }} {{ todo.createdAt }} <button @click="removeTodo(todo)">X</button>
         </li>
       </ul>
     </div>

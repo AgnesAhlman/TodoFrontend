@@ -2,12 +2,11 @@ export interface Todo {
   id: number;
   name: string;
   isComplete: boolean;
+  createdAt: string;
 }
 
 const BASE_URL = 'http://localhost:5053/api/TodoItems';
 
-// Return the newTodo not only the ID of the new todo.
-// Update naming of input parameter "newTodo".
 export async function createTodo(newTodo: string): Promise<Todo> {
   const requestOptions = {
     method: 'POST',
