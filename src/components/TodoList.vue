@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { deleteTodo, getTodos, type Todo } from '../services/api';
+import { ref } from 'vue';
+import { deleteTodo, type Todo } from '../services/api';
 
-const todos = ref<Todo[]>([]); // Explicitly specify the type
+const props = defineProps<{
+  todos: Todo[];
+}>();
+const todos = ref(props.todos);
 
 const options: Intl.DateTimeFormatOptions = {
   month: 'numeric',
   day: 'numeric',
 };
 const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
-
-onMounted(async () => {
-  todos.value = await getTodos();
-});
 
 async function removeTodo(todo: Todo) {
   const isSuccess = await deleteTodo(todo.id);

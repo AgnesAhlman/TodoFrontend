@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import TodoList from './components/TodoList.vue';
-import CreateTodo from './components/CreateTodo.vue';
+import TodosContainer from './components/TodosContainer.vue';
 </script>
 
 <template>
   <main class="background">
-    <CreateTodo />
-    <TodoList />
+    <TodosContainer />
   </main>
 </template>
 
