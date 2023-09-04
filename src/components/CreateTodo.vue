@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import { createTodo, type Todo } from '@/services/api';
 import { ref } from 'vue';
 
 const props = defineProps<{
-  todos: Todo[];
+  onSubmit: (newTodo: string) => Promise<void>;
 }>();
-const newTodo = ref<string>('');
-const todos = ref(props.todos);
 
-async function onSubmit() {
-  const todo = await createTodo(newTodo.value);
-  todos.value.push(todo);
+const newTodo = ref<string>('');
+
+async function _onSubmit() {
+  console.log(newTodo.value);
+  await props.onSubmit(newTodo.value);
   newTodo.value = '';
-  console.log(todo);
 }
 </script>
 
 <template>
   <div>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="_onSubmit">
       <input v-model="newTodo" />
       <button>+</button>
     </form>

@@ -1,26 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { deleteTodo, type Todo } from '../services/api';
+import { type Todo } from '../services/api';
 
-const props = defineProps<{
+defineProps<{
   todos: Todo[];
+  removeTodo: (todo: Todo) => Promise<void>;
 }>();
-const todos = ref(props.todos);
 
 const options: Intl.DateTimeFormatOptions = {
   month: 'long',
   day: 'numeric',
 };
 const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
-
-async function removeTodo(todo: Todo) {
-  const isSuccess = await deleteTodo(todo.id);
-  if (isSuccess) {
-    todos.value = todos.value.filter((t) => t !== todo);
-  } else {
-    console.error('Failed to delete todo with ID:', todo.id);
-  }
-}
 </script>
 
 <template>

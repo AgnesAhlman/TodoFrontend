@@ -24,7 +24,8 @@ export async function getTodos() {
     headers: { 'Content-Type': 'application/json' },
   };
   const response = await fetch(BASE_URL, requestOptions);
-  return await response.json();
+  console.log(response);
+  return response.json();
 }
 
 export async function deleteTodo(todoId: number) {
