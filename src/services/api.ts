@@ -33,5 +33,5 @@ export async function deleteTodo(todoId: number) {
     headers: { 'Content-Type': 'application/json' },
   };
   const response = await fetch(`${BASE_URL}/${todoId}`, requestOptions);
-  return response.ok; // Return a boolean indicating success
+  return response.ok;
 }

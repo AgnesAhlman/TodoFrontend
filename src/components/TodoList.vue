@@ -8,7 +8,7 @@ const props = defineProps<{
 const todos = ref(props.todos);
 
 const options: Intl.DateTimeFormatOptions = {
-  month: 'numeric',
+  month: 'long',
   day: 'numeric',
 };
 const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
@@ -30,6 +30,7 @@ async function removeTodo(todo: Todo) {
       <h5>Here are your todos:</h5>
       <ul>
         <li v-for="todo in todos" :key="todo.id">
+          <input type="checkbox" v-model="todo.isComplete" />
           {{ todo.name }} {{ dateFormatter.format(new Date(todo.createdAt)) }}
           <button @click="removeTodo(todo)">X</button>
         </li>
@@ -46,5 +47,9 @@ async function removeTodo(todo: Todo) {
   justify-content: center;
   padding: 5rem;
   background-color: antiquewhite;
+}
+
+li {
+  list-style: none;
 }
 </style>

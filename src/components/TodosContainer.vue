@@ -12,9 +12,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="Container">
+  <div class="create">
     <p>Add a new Todo:</p>
     <CreateTodo :todos="todos" />
+  </div>
+  <div class="listOfTodos">
     <TodoList :todos="todos" />
   </div>
 </template>
