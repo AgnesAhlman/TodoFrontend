@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useTodosStore } from '../stores/todolist';
 
-const props = defineProps<{
-  onSubmit: (newTodo: string) => Promise<void>;
-}>();
+const name = ref<string>('');
+const store = useTodosStore();
 
-const newTodo = ref<string>('');
-
-async function _onSubmit() {
-  console.log(newTodo.value);
-  await props.onSubmit(newTodo.value);
-  newTodo.value = '';
+function addItemAndClear(newTodo: string) {
+  if (newTodo.length === 0) {
+    return;
+  }
+  store.createTodo(newTodo);
+  name.value = '';
 }
 </script>
 
 <template>
   <div>
-    <form @submit.prevent="_onSubmit">
-      <input v-model="newTodo" />
-      <button>+</button>
+    <form @submit.prevent="addItemAndClear(name)">
+      <input v-model="name" type="text" /><button>Add</button>
     </form>
   </div>
 </template>

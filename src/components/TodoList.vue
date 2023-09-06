@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { type Todo } from '../services/api';
+import { useTodosStore } from '../stores/todolist';
+import { storeToRefs } from 'pinia';
+const store = useTodosStore();
 
-defineProps<{
-  todos: Todo[];
-  removeTodo: (todo: Todo) => Promise<void>;
-}>();
+const { removeTodo } = store;
+const { todos } = storeToRefs(store);
 
 const options: Intl.DateTimeFormatOptions = {
   month: 'long',
@@ -16,13 +16,13 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
 <template>
   <div class="container">
     <h1>Todo</h1>
-    <div v-if="todos">
+    <div>
       <h5>Here are your todos:</h5>
       <ul>
-        <li v-for="todo in todos" :key="todo.id">
+        <li v-for="todo in todos" :key="todo.id" class="item">
           <input type="checkbox" v-model="todo.isComplete" />
           {{ todo.name }} {{ dateFormatter.format(new Date(todo.createdAt)) }}
-          <button @click="removeTodo(todo)">X</button>
+          <button @click="removeTodo(todo.id)">X</button>
         </li>
       </ul>
     </div>
