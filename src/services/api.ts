@@ -36,3 +36,15 @@ export async function deleteTodo(todoId: number) {
   const response = await fetch(`${BASE_URL}/${todoId}`, requestOptions);
   return response.ok;
 }
+
+export async function updateTodo(todo: Todo): Promise<Todo> {
+  const { id, isComplete, name } = todo;
+  const requestOptions = {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, isComplete: isComplete }),
+  };
+  const response = await fetch(`${BASE_URL}/${id}`, requestOptions);
+  const data = await response.json();
+  return data;
+}

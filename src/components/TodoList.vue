@@ -3,7 +3,7 @@ import { useTodosStore } from '../stores/todolist';
 import { storeToRefs } from 'pinia';
 const store = useTodosStore();
 
-const { removeTodo } = store;
+const { removeTodo, updateTodoStatus } = store;
 const { todos } = storeToRefs(store);
 
 const options: Intl.DateTimeFormatOptions = {
@@ -19,7 +19,7 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
     <div>
       <h5>Here are your todos:</h5>
       <ul>
-        <li v-for="todo in todos" :key="todo.id" class="item">
+        <li v-for="todo in todos" :key="todo.id" class="item" @change="updateTodoStatus(todo)">
           <input type="checkbox" v-model="todo.isComplete" />
           {{ todo.name }} {{ dateFormatter.format(new Date(todo.createdAt)) }}
           <button @click="removeTodo(todo.id)">X</button>
