@@ -11,13 +11,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="create">
-    <p>Add a new Todo:</p>
-    <CreateTodo />
-  </div>
-  <div class="listOfTodos">
-    <TodoList />
+  <div class="wrapper">
+    <div class="create">
+      <h1>Todos</h1>
+      <CreateTodo />
+    </div>
+    <div class="listOfTodos">
+      <TodoList />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  background-color: white;
+}
+.create {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #234a6d;
+  padding: 1rem;
+  border-radius: 0rem 0rem 0rem 3rem;
+}
+
+h1 {
+  color: #7899b6;
+}
+</style>

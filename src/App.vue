@@ -11,11 +11,11 @@ import TodosContainer from './components/TodosContainer.vue';
 <style scoped>
 .background {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  background-color: rgb(234, 200, 167);
+  background-color: rgb(207, 211, 227);
 }
 </style>
