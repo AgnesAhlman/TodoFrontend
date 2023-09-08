@@ -18,15 +18,16 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
     <div class="todo">
       <div v-for="todo in todos" :key="todo.id" class="item" @change="updateTodoStatus(todo)">
         <div class="test">
-          <div class="check-and-title">
-            <input type="checkbox" v-model="todo.isComplete" />
-            <h2>{{ todo.name }}</h2>
+          <div class="todo-inner">
+            <div class="check-and-title">
+              <input type="checkbox" v-model="todo.isComplete" />
+              <input class="hej" type="text" v-model="todo.name" />
+            </div>
             <p class="created-at">
               Created at: {{ dateFormatter.format(new Date(todo.createdAt)) }}
             </p>
           </div>
           <div class="buttons">
-            <button>Edit</button>
             <button @click="removeTodo(todo.id)">x</button>
           </div>
         </div>
@@ -45,6 +46,16 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
   background-color: rgb(255, 255, 255);
 }
 
+.hej {
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.hej:focus {
+  border-bottom: 2px solid tomato;
+}
+
 .test {
   display: flex;
   flex-direction: row;
@@ -52,12 +63,16 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
   background-color: rgb(232, 234, 244);
   border-radius: 0.2rem;
 }
+
+.todo-inner {
+  padding: 1rem;
+}
 .check-and-title {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.5rem;
   gap: 0.5rem;
+  margin-bottom: 8px;
 }
 
 .item {
@@ -67,6 +82,8 @@ const dateFormatter = new Intl.DateTimeFormat('sv-SE', options);
 
 .buttons {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   background-color: rgb(254, 199, 98);
   padding: 0.5rem;
